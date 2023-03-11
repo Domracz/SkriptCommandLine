@@ -2,7 +2,7 @@
 @NAME=Trollmode
 @MainInstallPath=plugins/skript/scripts/
 @CurrentVersion=0.0.1
-@UpdateURL=
+@PackageUpdateURL=https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/trollmode/trollmode.cmdpackage
 @CMD PACKAGE END
 @PACKAGE INSTALL STR
 $dl https://cdn.discordapp.com/attachments/1083910289642242098/1083911305867558943/trollmode.sk -> trollmode.sk
