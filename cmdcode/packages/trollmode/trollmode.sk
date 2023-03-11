@@ -1,0 +1,251 @@
+command /trollmode [<string>] [<player>]:
+	aliases: /tm
+	permission: domraczprv.troll.trollmode
+	trigger:
+		if sender is a player:
+			if arg-1 is not set:
+				message "&cTrollMode Version 0.0.1%nl%&6-------------------------%nl%&c/trollmode invisplus - Become fully invisible%nl%&c/trollmode tpto <player> - Teleport to any player%nl%&c/trollmode zombies <player> - Zombies are the weekest mob... but a ton can deal some damage%nl%/trollmode void <player> - Just teleport them into the void!%nl%&c/trollmode fakehack <player> - kicks them for ""you logged in from another location!""%nl%&c/trollmode anvil <player> - Hits them with an anvil"
+			else:
+				if arg-1 is "invisplus" or "vanish" or "invisability":
+					if {trollmode::invisable::%player's uuid%} is not set:
+						set {trollmode::invisable::%player's uuid%} to true
+						hide player from all players
+						loop {trollmodeteam::%{trollmodeteam::currentteam::%player's uuid%}%::*}:
+							set {_player} to "%loop-value%" parsed as player
+							reveal player to {_player}
+							send "&3[Trollmode] &a%player's display name% &awent into trollmode vanish." to {_player}
+						set {_player} to "%{trollmodeteam::currentteam::%player's uuid%}%" parsed as player
+						reveal player to {_player}
+						message "&c[Trollmode] &3You are now invisible!"
+					else:
+						clear {trollmode::invisable::%player's uuid%}
+						reveal player to all players
+						loop {trollmodeteam::%{trollmodeteam::currentteam::%player's uuid%}%::*}:
+							set {_player} to "%loop-value%" parsed as player
+							reveal player to {_player}
+							send "&3[Trollmode] &a%player's display name% &ais no longer in trollmode vanish." to {_player}
+						set {_player} to "%{trollmodeteam::currentteam::%player's uuid%}%" parsed as player
+						reveal player to {_player}
+						message "&c[Trollmode] &3You are no longer invisable."
+				else if arg-1 is "tpto":
+					if arg-2 is set:
+						teleport player to arg-2
+						message "&c[Trollmode] &3Teleported to %arg-2%&3!"
+					else:
+						message "&4Error: &cYou must specify a player to teleport to!"
+				else if arg-1 is "fling":
+					if arg-2 is set:
+						message "&c[Trollmode] &3%arg-2% &3Was exploded into the air"
+						send arg-2 title "&4BOOM!" with subtitle "&3You were launched into the air!"
+						strike lightning at arg-2's location
+						apply levitation 126 to arg-2 for 1 second
+					else:
+						message "&4Error: &cYou must specify a player to fling!"
+				else if arg-1 is "zombies" or "hord":
+					if arg-2 is set:
+						send arg-2 title "&3[PRO TIP]" with subtitle "&aZombies are the weekest mob in the game! Dont die!"
+						set {_currentpos} to arg-2's location
+						loop 100 times:
+							spawn baby zombie at {_currentpos}
+							apply strength 2 to last spawned entity for 9999 days
+						message "&aZombies spawned!"
+					else:
+						message "&4Error: &cYou must specify a player to hord with zombies!"
+				else if arg-1 is "void":
+					if arg-2 is set:
+						set {_y} to arg-2's y coordinate
+						set {_down} to ({_y} + 20)
+						set {_loc} to location {_down} blocks below arg-2
+						teleport arg-2 to {_loc}
+					else:
+						message "&cNo player selected! "
+				else if arg-1 is "fakehack", "anotherlocation" or "hackfake":
+					if arg-2 is set:
+						message "&aLogged in from another location!"
+						kick arg-2 due to "You logged in from another location!"
+					else:
+						message "&4Error: &cYou must specify a player to fake hack!"
+				else if arg-1 is "watchyourhead" or "anvil":
+					if arg-2 is set:
+						if {trollmode::anvil::%arg-2's uuid%} is not set:
+							message "&cBetter hope they have a hardhat!"
+							set block 50 blocks above arg-2 to anvil
+							send arg-2 title "&4A&cN&4V&cI&4L &cI&4N&cC&4O&cM&4E&cI&4N&cG" with subtitle "&6ANVIL SENT BY: %player%&6!"
+							set {trollmode::anvil::%arg-2's uuid%} to true
+						else:
+							message "&cCannot send anvil: I am already sending an anvil to that player!"
+				else if arg-1 is "okboomer":
+					loop all players:
+						loop 100 times:
+							spawn creeper at loop-player's location
+				else if arg-1 is "items":
+					if sender is a player:
+						loop {trollitems::*}:
+							give loop-value to player
+							message "&7[&4( ͡° ͜ʖ ͡°)&7] &aGiven troll items to you!"
+					else:
+						message "&7[&4( ͡° ͜ʖ ͡°)&7] &cError: Console cannot have items."
+				else if arg-1 is "sus":
+					if arg-2 is set:
+						loop 2 times:
+							send "&4[ඞඞ] SUS [ඞඞ]" to arg-2
+							wait 1 second
+							loop 600 times:
+								send " " to arg-2
+							send "&4ඞ"
+							wait 1 second
+							loop 600 times:
+								send " " to arg-2
+							send "&4  ඞ"
+							wait 1 second
+							loop 600 times:
+								send " " to arg-2
+							send "&4    ඞ"
+							wait 1 second
+							loop 600 times:
+								send " " to arg-2
+							send "&4      ඞ" to arg-2
+							wait 1 second
+							loop 600 times:
+								send " " to arg-2
+							send "&4        ඞ" to arg-2
+							
+every 2 seconds:
+	loop all players:
+		if {trollmode::invisable::%loop-player's uuid%} is true:
+			send action bar "&6[TrollMode] &3You are invisable to all other players!" to loop-player
+			
+			
+on any move:
+	if {trollmode::anvil::%player's uuid%} is true:
+		loop blocks in radius 1 around player:
+			if loop-block is chipped anvil or damaged anvil or anvil:
+				set block at location of loop-block to air
+				clear {trollmode::anvil::%player's uuid%}
+				exit loop
+		cancel event
+		
+		
+on death:
+	clear {trollmode::anvil::%victim's uuid%}
+	loop blocks in radius 1 around victim:
+		if loop-block is chipped anvil or damaged anvil or anvil:
+			set block at location of loop-block to air
+			
+			
+			
+on load:
+	set {trollitems::fb} to fire charge named "&4Fireball Launcher" with lore "&4( ͡° ͜ʖ ͡°)"
+	set {trollitems::thunder} to blaze rod named "&6Lightning Rod" with lore "&4( ͡° ͜ʖ ͡°)"
+	set {trollitems::blind} to enderman spawn egg named "&0Blindness Void" with lore "&4( ͡° ͜ʖ ͡°)"
+	set {trollitems::nuke} to tnt named "&6NUKE" with lore "&4( ͡° ͜ʖ ͡°)"
+	set {trollitems::creeper} to creeper head named "&2Creeper Raid" with lore "&4( ͡° ͜ʖ ͡°)"
+			
+on rightclick:
+	if player is holding {trollitems::fb}:
+		cancel event
+		shoot a fireball from player at speed 1
+		
+on rightclick:
+	if target entity of player is set:
+		if player is holding {trollitems::thunder}:
+			set {_loc} to location of target entity of player
+			strike lightning at {_loc}
+	else if player's target block is set:
+		if player is holding {trollitems::thunder}:
+			set {_loc} to location of player's target block
+			strike lightning at {_loc}
+			
+on rightclick:
+	if player is holding {trollitems::blind}:
+		cancel event
+		if target entity of player is set:
+			if target entity of player is a player:
+				apply potion of blindness of tier 255 to target entity of player for 20 seconds
+				send "&4You were blinded by %player% for 20 seconds!" to target entity of player
+		else:
+			message "&4Not targeting a player ;-;"
+			
+on rightclick:
+	if player is holding {trollitems::creeper}:
+		cancel event
+		if target entity of player is set:
+			if target entity of player is a player:
+				loop 100 times:
+					spawn creeper at location of target entity
+		else:
+			message "&4Not targeting a player ;-;"
+			
+
+command /trollmodeteam [<text>] [<player>]:
+	permission: domraczprv.troll.trollmode
+	permission message: &c69696969 creepers spawned
+	trigger:
+		if arg-1 is set:
+			if arg-1 is "add":
+				if arg-2 is set:
+					if arg-2 has permission "domraczprv.troll.trollmode":
+						if {trollmodeteam::%player's uuid%::*} does not contain arg-2's uuid:
+							add player's uuid to {trollmodeteamrequest::%arg-2's uuid%::*}
+							message "&3[TrollMode] &aSent team request to %arg-2's display name%"
+							send "&3&m----------------%nl%&aTrollmode Team Request%nl%&1%player's display name% &1has requested to%nl%&1add you to their trollmode team.%nl%%nl%&cAccepting this request will:%nl%&c - Allow you to see other people %nl%&cin this player's trollmode team%nl%&c - Allow other people in this players team%nl%&cto see you.%nl%%nl%<command:/trollmodeteam accept %player%>&3Click here to accept request%nl%<command:/trollmodeteam deny %player%>&4Click here to deny<reset>" to arg-2
+						else:
+							message "&cPlayer is already in team!"
+					else:
+						message "&cCannot send team request! This player does not have permission to use trollmode"
+				else:
+					message "&3[TrollMode] &3Enter a player name"
+			else if arg-1 is "remove":
+				if arg-2 is set:
+					if {trollmodeteam::%player's uuid%::*} contains arg-2's uuid:
+						remove arg-2's uuid from {trollmodeteam::%player's uuid%::*}
+						clear {trollmodeteam::currentteam::%arg-2's uuid%}
+						send "&4%player% &4has removed your from their trollmode team!"
+					else:
+						message "&cThat player is NOT on your team!"
+				else:
+					message "&3[TrollMode] &3Enter a player name"
+			else if arg-1 is "accept":
+				if arg-2 is set:
+					if {trollmodeteamrequest::%player's uuid%::*} contains arg-2's uuid:
+						if {trollmodeteam::currentteam::%player's uuid%} is not set:
+							send "&3[TrollMode] &3%player% &3accepted your trollmode team request!" to arg-2
+							message "&aAccepted request from %arg-2's display name%"
+							add player's uuid to {trollmodeteam::%arg-2's uuid%::*}
+							set {trollmodeteam::currentteam::%player's uuid%} to arg-2's uuid
+							if {trollmodeteam::currentteam::%arg-2's uuid%} is not set:
+								set {trollmodeteam::currentteam::%arg-2's uuid%} to arg-2's uuid
+								remove arg-2 from {trollmodeteamrequest::%player's uuid%::*}
+								loop {trollmodeteamrequest::%player's uuid%::*}:
+									send "&3[TrollMode] &3Your team request expired because the player joined a different team!" to loop-value
+								clear {trollmodeteamrequest::%player's uuid%::*}
+						else:
+							message "&3[TrollMode] &4You are already on a team! Type /team leave to leave your team!"
+					else:
+						message "&cPlayer is not sending a team request to you!"
+			else if arg-1 is "deny":
+				if arg-2 is set:
+					send "&3[TrollMode] &4Your team request to %player's display name% &4was denyed." to arg-2
+					remove arg-2 from {trollmodeteamrequest::%player's uuid%::*}
+					message "&4Denyed request from %arg-2's display name%"
+			else if arg-1 is "leave":
+				set {_player} to "%{trollmodeteam::currentteam::%player's uuid%}%" parsed as player
+				send "&3[Trollmode] &4%player% left your team!" to {_player}
+				clear {trollmodeteam::currentteam::%player's uuid%}
+				message "&3Left your current team."
+			else:
+				message "&4Invalid Argument."
+
+on join:
+	loop all players:
+		if {trollmode::invisable::%loop-player's uuid%} is true:
+			if {trollmodeteam::currentteam::%loop-player's uuid%} is not {trollmodeteam::currentteam::%player's uuid%}:
+				hide loop-player from player
+			else:
+				message "&3[Trollmode] &a%loop-player's uuid% &ais in trollmode vanish."
+	if {trollmode::invisable::%player's uuid%} is true:
+		loop all players:
+			if {trollmodeteam::currentteam::%loop-player's uuid%} is not {trollmodeteam::currentteam::%player's uuid%}:
+				hide player from loop-player
+			else:
+				send "&3[TrollMode] &3%player's uuid% &3joined in trollmode vanish."
