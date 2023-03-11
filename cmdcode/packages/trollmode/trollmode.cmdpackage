@@ -1,7 +1,7 @@
 @CMD PACKAGE STR
 @NAME=Trollmode
 @MainInstallPath=plugins/skript/scripts/
-@CurrentVersion=0.0.1
+@CurrentVersion=1.0
 @PackageUpdateURL=https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/trollmode/trollmode.cmdpackage
 @CMD PACKAGE END
 @PACKAGE INSTALL STR
