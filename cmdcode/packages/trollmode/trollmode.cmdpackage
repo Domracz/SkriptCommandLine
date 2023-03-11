@@ -1,0 +1,14 @@
+@CMD PACKAGE STR
+@NAME=Trollmode
+@MainInstallPath=plugins/skript/scripts/
+@CMD PACKAGE END
+@PACKAGE INSTALL STR
+$dl https://cdn.discordapp.com/attachments/1083910289642242098/1083911305867558943/trollmode.sk -> trollmode.sk
+$cmd "sk reload trollmode.sk"
+$snd "&a[TrollMode] Thank you for installing trollmode on your server!"
+@PACKAGE INSTALL END
+@PACKAGE UNINSTALL STR
+$snd "&a[TrollMode] Trollmode is being uninstalled. Thank you for using trollmode!"
+$del trollmode.sk
+$snd "&3Trollmode has been uninstalled."
+@PACKAGE UNINSTALL END
