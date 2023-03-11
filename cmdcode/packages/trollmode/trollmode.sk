@@ -1,6 +1,6 @@
 command /trollmode [<string>] [<player>]:
 	aliases: /tm
-	permission: domraczprv.troll.trollmode
+	permission: trollmode.command
 	trigger:
 		if sender is a player:
 			if arg-1 is not set:
@@ -178,7 +178,7 @@ on rightclick:
 			
 
 command /trollmodeteam [<text>] [<player>]:
-	permission: domraczprv.troll.trollmode
+	permission: trollmode.trollmodeteam
 	permission message: &c69696969 creepers spawned
 	trigger:
 		if arg-1 is set:
