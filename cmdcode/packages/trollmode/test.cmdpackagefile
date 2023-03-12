@@ -1,0 +1,2 @@
+on load:
+  send "&cfeat pic" to all players
