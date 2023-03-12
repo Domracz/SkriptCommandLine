@@ -5,7 +5,7 @@
 @PackageUpdateURL=https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/trollmode/trollmode.cmdpackage
 @CMD PACKAGE END
 @PACKAGE INSTALL STR
-$dl https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/trollmode/trollmode.cmdpackagefile -> trollmode.sk
+$dl https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages/trollmode/trollmode.sk -> trollmode.sk
 $cmd "sk reload trollmode.sk"
 $snd "&a[TrollMode] Thank you for installing trollmode on your server!"
 @PACKAGE INSTALL END
