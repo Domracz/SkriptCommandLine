@@ -68,12 +68,13 @@ function parseCommands(commands: texts, p: player, currentpath: text):
 			loop {_effectparts::*}:
 				if loop-value-2 is " ":
 					add 1 to {_spacesdone}
-					set {_effectparts::%loop-index%} to ""
+					set {_effectparts::%loop-index-2%} to ""
 				else:
-					break loop
+					stop loop
 			set {_eff} to join {_effectparts::*}
 			set {_indents} to {_spacesdone} / 4
-			if {_indents} is greater than {_condleft} or {_indents} is equal to {_condleft}:
+			set {_gthan} to {_condleft} - 1
+			if {_indents} is greater than {_gthan}:
 				if {_indents} is less than {_condleft}:
 					set {_condleft} to {_indents}
 				if {_condtrue::%{_condleft}%} is true or {_condleft} is 0:
