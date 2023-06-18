@@ -46,3 +46,13 @@ function parsePackageInfo(fp: String, t: String) :: texts:
 		
 	else if {_t} is "uninstallcmd":
 		return {_ucommands::*}
+
+function getRepoPackage(name: string) :: string:
+	loop lines in file "plugins/cmdline/repos/repolist":
+		loop lines in url loop-value:
+			set {_parts::*} to loop-value-2 split at "="
+			set {_pname} to {_parts::1}
+			set {_url} to {_parts::2}
+			if {_name} is {_pname}:
+				return {_url}
+		
