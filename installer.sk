@@ -5,10 +5,10 @@ on load:
 		send "&aPlease note that you must have skUtilities for the skript to work." to console
 		set {_plugins::*} to plugins list
 		if {_plugins::*} does not contain "skBee":
-			download file from "https://github.com/ShaneBeee/SkBee/releases/download/2.13.0/SkBee-2.13.0.jar" to file "/plugins/"
+			download file from "https://github.com/ShaneBeee/SkBee/releases/download/2.13.0/SkBee-2.13.0.jar" to file "/plugins/SkBee-2.13.0.jar"
 			send "&3Installed skBee addon." to console
 		if {_plugins::*} does not contain "skQuery":
-			download file from "https://github.com/SkQuery/SkQuery/releases/download/4.1.9/SkQuery-4.1.9.jar" to file "/plugins/"
+			download file from "https://github.com/SkQuery/SkQuery/releases/download/4.1.9/SkQuery-4.1.9.jar" to file "/plugins/SkQuery-4.1.9.jar"
 			send "&3Installed skQuery addon." to console
 		create directory "plugins/skript/scripts/_CMD"
 		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/ADepend.sk" to file "/plugins/skript/scripts/_CMD/ADepend.sk"
