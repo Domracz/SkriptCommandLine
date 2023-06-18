@@ -70,7 +70,8 @@ on chat:
 					send "Repo - %{_args}%"
 					
 					loop contents from url {_args}:
-						set {_parts::*} to loop-value-2 split at "="
+						set {_line} to loop-value-2
+						set {_parts::*} to {_line} split at "="
 						set {_pname} to {_parts::1}
 						send "Package: %{_pname}%"
 on load:
