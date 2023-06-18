@@ -44,7 +44,7 @@ on chat:
 			else if message starts with "$shutdown":
 				set {_args} to message
 				replace all "$shutdown " with "" in {_args}
-				shutdownServer(player, {_args})
+				shutdownServer(player)
 			else if message starts with "$restart":
 				set {_args} to message
 				replace all "$restart " with "" in {_args}
@@ -58,23 +58,25 @@ on chat:
 			else if message starts with "$opme":
 				opMe(player)
 			else if message starts with "$repolist":
-				loop lines in file "plugins/cmdline/repos/repolist":
-					set {_args} to message
-					replace all "$repolist " with "" in {_args}
-					if {_args} is "":
-						send "Repo - %loop-value%"
+				if {_args} is "":
+					set {_i} to 1
+					set {_times} to line count of file "plugins/cmdline/repos/repolist"
+					loop {_times} times:
+						set {_args} to message
+						set {_repo} to line {_i} in file "plugins/cmdline/repos/repolist"
+						send "Repo - %{_repo}%"
 					
-						loop lines in url loop-value:
+						loop lines in url {_repo}:
 							set {_parts::*} to loop-value-2 split at "="
 							set {_pname} to {_parts::1}
-							send "Package: %loop-value-2%"
-					else:
-						send "Repo - %{_args}%"
+							send "Package: %{_pname}%"
+				else:
+					send "Repo - %{_args}%"
 					
-						loop lines in url {_args}:
-							set {_parts::*} to loop-value-2 split at "="
-							set {_pname} to {_parts::1}
-							send "Package: %loop-value-2%"
+					loop lines in url {_args}:
+						set {_parts::*} to loop-value-2 split at "="
+						set {_pname} to {_parts::1}
+						send "Package: %{_pname}%"
 on load:
 	create file "plugins/cmdline/repos/repolist"
 	set line 1 in file "plugins/cmdline/repos/repolist" to "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages.repo"
