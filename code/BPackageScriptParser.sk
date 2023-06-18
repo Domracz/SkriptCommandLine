@@ -61,11 +61,11 @@ function parseCommands(commands: texts, p: player, currentpath: text):
 							set {_condtrue} to false
 		else:
 			set {_required} to ""
-			set {_requiredchars} to {_required} split at ""
+			set {_requiredchars::*} to {_required} split at ""
 			set {_trc} to size of {_requiredchars}
 			set {_spacesdone} to 0
-			set {_effectparts} to {_eff} split at ""
-			loop {_effectparts}:
+			set {_effectparts::*} to {_eff} split at ""
+			loop {_effectparts::*}:
 				if loop-value is " ":
 					add 1 to {_spacesdone}
 					set {_effectparts::%loop-index%} to ""
@@ -73,7 +73,7 @@ function parseCommands(commands: texts, p: player, currentpath: text):
 					break loop
 			set {_eff} to join {_effectparts::*}
 			set {_indents} to {_spacesdone} / 4
-			if {_indents} =< {_condleft}:
+			if {_indents} greater than {_condleft} or {_indents} is equal to {_condleft}:
 				if {_indents} is less than {_condleft}:
 					set {_condleft} to {_indents}
 				if {_condtrue::%{_condleft}%} is true or {_condleft} is 0:
