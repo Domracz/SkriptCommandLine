@@ -1,7 +1,7 @@
 command /cmd:
 	trigger:
 		if executor is player:
-			message "&4[Command Line] Loading CMD Version 0.1"
+			message "&4[Command Line] Loading CMD Version 1.0"
 			if player has permission "cmd":
 				if {cmd::%player's uuid%} is not set:
 					message "&4[Command Line] This is a DANGEROUS TOOL. It is capable of modifying server files, installing plugins and much more."
