@@ -13,7 +13,7 @@ function restartServer(p: player):
     restart server
 
 function getPlugins(p: player):
-    set {_plugins::*} to plugin list
+    set {_plugins::*} to plugins list
     send "&aPlugins found. Here's a list of all of them: " to {_p}
     loop {_plugins::*}:
         send "&a%loop-value%" to {_p}
