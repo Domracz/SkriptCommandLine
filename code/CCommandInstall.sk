@@ -2,7 +2,13 @@ function installCommand(a: string, p: player):
 	send "&3Running Installer" to {_p}
 	set {_a::*} to {_a} split at " "
 	send "&3Attempting to download package mappings" to {_p}
-	set {_urlpath} to {_a::1}
+	if {_a::1} does not start with "https://" or "http://":
+		set {_urlpath} to getRepoPackage({_a::1})
+		if {_urlpath} is not set:
+			send "&4Invalid package name or URL." to {_p}
+			return;
+	else:
+		set {_urlpath} to {_a::1}
 	replace all "https://" and "http://" with "" in {_urlpath}
 	set {_folders::*} to {_urlpath} split at "/"
 	set {_last} to {_folders::%amount of {_folders::*}%}
