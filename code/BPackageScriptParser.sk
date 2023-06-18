@@ -73,7 +73,7 @@ function parseCommands(commands: texts, p: player, currentpath: text):
 					break loop
 			set {_eff} to join {_effectparts::*}
 			set {_indents} to {_spacesdone} / 4
-			if {_indents} greater than {_condleft} or {_indents} is equal to {_condleft}:
+			if {_indents} is greater than {_condleft} or {_indents} is equal to {_condleft}:
 				if {_indents} is less than {_condleft}:
 					set {_condleft} to {_indents}
 				if {_condtrue::%{_condleft}%} is true or {_condleft} is 0:
