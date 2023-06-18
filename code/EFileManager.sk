@@ -1,0 +1,22 @@
+function modFile(p: player, file: string, line: number, replacement: string):
+    if file {_file} exists:
+        set line {_line} in file {_file} to {_replacement}
+        send "&aFile modified." to {_p}
+    else:
+        send "&cFile does not exist." to {_p}
+
+function createFile(p: player, file: string):
+    if file {_file} does not exist:
+        create file {_file}
+        send "&aFile successfully created." to {_p}
+    else:
+        send "&cFile already exists." to {_p}
+
+function deleteFile(p: player, file: string):
+    if file {_file} exists:
+        delete file {_file}
+        send "&aFile successfully deleted." to {_p}
+    else:
+        send "&cFile does not exist." to {_p}
+
+    

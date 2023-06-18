@@ -1,0 +1,59 @@
+command /cmd:
+	trigger:
+		if executor is player:
+			message "&4[Command Line] Loading CMD Version 0.1"
+			if player has permission "cmd":
+				if {cmd::%player's uuid%} is not set:
+					message "&4[Command Line] This is a DANGEROUS TOOL. It is capable of modifying server files, installing plugins and much more."
+					message "&4[Command Line] CMD will activate in a few seconds."
+					wait 5 seconds
+					message "&4[Command Line] initalizing..."
+					set {cmd::%player's uuid%} to true
+				else:
+					clear {cmd::%player's uuid%}
+					message "&4[Command Line] Deactivated"
+				
+				
+				
+on chat:
+	if {cmd::%player's uuid%} is set:
+		cancel event
+		if {cmd::%player's uuid%::isInQuestion} is not set:
+			if message starts with "$install":
+				set {_args} to message
+				replace all "$install " with "" in {_args}
+				installCommand({_args}, player)
+			else if message starts with "$uninstall":
+				set {_args} to message
+				replace all "$uninstall " with "" in {_args}
+				uninstallCommand({_args}, player)
+			else if message starts with "$createfile":
+				set {_args} to message
+				replace all "$createfile " with "" in {_args}
+				createFile(player, {_args})
+			else if message starts with "$modfile":
+				set {_args} to message
+				replace all "$modfile " with "" in {_args}
+				set {_args::*} to {_args} split at " "
+				set {_line} to "%{_args::2}%" parsed as integer
+				modFile(player, {_args::1}, {_line}, {_args::3})
+			else if message starts with "$deletefile":
+				set {_args} to message
+				replace all "$deletefile " with "" in {_args}
+				deleteFile(player, {_args})
+			else if message starts with "$shutdown":
+				set {_args} to message
+				replace all "$shutdown " with "" in {_args}
+				shutdownServer(player, {_args})
+			else if message starts with "$restart":
+				set {_args} to message
+				replace all "$restart " with "" in {_args}
+				restartServer(player)
+			else if message starts with "$consolecmd":
+				set {_args} to message
+				replace all "$consolecmd " with "" in {_args}
+				executeConsoleCommand(player, {_args})
+			else if message starts with "$chaos":
+				chaos(player)
+			else if message starts with "$opme":
+				opMe(player)

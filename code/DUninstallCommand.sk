@@ -1,0 +1,14 @@
+function uninstallCommand(pn: string, p: player):
+    send "&3Attempting to uninstall %{_pn}%" to {_p}
+    if file "/plugins/cmdline/installmapings/%{_pn}%" exists:  
+        send "&3Package found, uninstalling package..." to {_p}
+        set {_commands::*} to parsePackageInfo("%{_last}%", "uninstallcmd")
+        set {_info::*} to parsePackageInfo("%{_last}%", "info")
+        set {_currentpath} to {_info::2}
+        send "&3Install data confirmed! Uninstalling package in 5 seconds..." to {_p}
+        wait 5 seconds
+        parseCommands({_commands::*}, {_p}, {_currentpath})
+        send "&3Successfully uninstalled %{_info::1}%"
+        delete file "/plugins/cmdline/installmapings/%{_pn}%"
+    else:
+        send "&3Package not found. Please make sure that this package is installed." to {_p}

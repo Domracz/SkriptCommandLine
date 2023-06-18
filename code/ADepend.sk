@@ -1,0 +1,48 @@
+function parsePackageInfo(fp: String, t: String) :: texts:
+	set {_lines::*} to file contents of "plugins/cmdline/installmappings/%{_fp}%"
+	set {_phase} to "none"
+	loop {_lines::*}:
+		if {_phase} is "none":
+			if loop-value is "@CMD PACKAGE STR":
+				set {_phase} to "packageinfo"
+			else if loop-value is "@PACKAGE INSTALL STR":
+				set {_phase} to "packageinstall"
+			else if loop-value is "@PACKAGE UNINSTALL STR":
+				set {_phase} to "packageuninstall"
+		else if {_phase} is "packageinfo":
+			if loop-value starts with "@NAME=":
+				set {_name} to loop-value
+				replace all "@NAME=" in {_name} with ""
+			else if loop-value starts with "@MainInstallPath=":
+				set {_homepath} to loop-value
+				replace all "@MainInstallPath=" in {_homepath} with ""
+			else if loop-value starts with "@CurrentVersion=":
+				set {_version} to loop-value
+				replace all "@CurrentVersion=" in {_version} with ""
+			else if loop-value starts with "@PackageUpdateURL=":
+				set {_updateurl} to loop-value
+				replace all "@PackageUpdateURL=" in {_updateurl} with ""
+			else if loop-value is "@CMD PACKAGE END":
+				set {_phase} to "none"
+		else if {_phase} is "packageinstall":
+			if loop-value starts with "$" or "*" or "    ":
+				add loop-value to {_commands::*}
+			else if loop-value is "@PACKAGE INSTALL END":
+				set {_phase} to "none"
+		else if {_phase} is "packageuninstall":
+			if loop-value starts with "$" or "*" or "    ":
+				add loop-value to {_commands::*}
+			else if loop-value is "@PACKAGE UNINSTALL END":
+				set {_phase} to "none"
+				
+	if {_t} is "info":
+		set {_info::1} to {_name}
+		set {_info::2} to {_homepath}
+		set {_info::3} to {_updateurl}
+		set {_info::4} to {_version}
+		return {_info::*}
+	else if {_t} is "installcmd":
+		return {_commands::*}
+		
+	else if {_t} is "uninstallcmd":
+		return {_ucommands::*}

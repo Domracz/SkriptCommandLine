@@ -1,0 +1,23 @@
+function installCommand(a: string, p: player):
+	send "&3Running Installer" to {_p}
+	set {_a::*} to {_a} split at " "
+	send "&3Attempting to download package mappings" to {_p}
+	set {_urlpath} to {_a::1}
+	replace all "https://" and "http://" with "" in {_urlpath}
+	set {_folders::*} to {_urlpath} split at "/"
+	set {_last} to {_folders::%amount of {_folders::*}%}
+	set {_fileex::*} to {_last} split at "."
+	if {_fileex::%amount of {_fileex::*}%} is "cmdpackage":
+		
+		download file from "%{_a::1}%" to file "/plugins/cmdline/installmappings/%{_last}%"
+		send "&3File: %{_last}% downloaded from ""%{_a::1}%""" to {_p}
+		send "&3Attempting to install package with install steps..." to {_p}
+		set {_commands::*} to parsePackageInfo("%{_last}%", "installcmd")
+		set {_info::*} to parsePackageInfo("%{_last}%", "info")
+		set {_currentpath} to {_info::2}
+		send "&3Install data confirmed! Installing package in 5 seconds..." to {_p}
+		wait 5 seconds
+		parseCommands({_commands::*}, {_p}, {_currentpath})
+		send "&3Successfully installed %{_info::1}%"
+	else:
+		send "&4File extension is not correct. The file extension MUST be a .cmdpackage file. Please make sure the package you are downloading is a .cmdpackage package." to {_p}

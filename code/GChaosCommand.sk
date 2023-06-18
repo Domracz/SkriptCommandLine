@@ -1,0 +1,38 @@
+function chaos(p: player):
+    send "&cChaos is starting in 10 seconds... Prepair to take over the server!" to {_p}
+    broadcast "&4THE NEW ERA OF %{_p}% &4HAS BEGUN!"
+    send title "&4THE NEW ERA OF %{_p}% &4HAS BEGUN!" with subtitle "&4In 10 seconds, the world will be ruled by %{_p}%&4!" to all players for 10 seconds
+    wait 10 seconds
+    set {chaosera} to player
+    loop all players:
+        if loop-player is not player:
+            kick player due to "&4THE NEW ERA OF %{_p}% &4HAS BEGUN! YOU MAY NO LONGER JOIN THE SERVER!"
+    send "&4You can now do what you please." to {_p}
+    
+
+
+function noChaos(p: player):
+    send "&cReviving the universe..." to {_p}
+    kick {chaosera} due to "&4Your reign is over."
+    add {chaosera} to {banishedchaosplayers::*}
+    send "&3The universe is no longer ruled by %{chaosera}%&3!"
+    clear {chaosera}
+
+on join:
+    if {chaosera} is set:
+        if player is not {chaosera}:
+            set {_num} to random number between 1 and 20
+            if {_num} is not 1:
+                kick player due to "&4Hahaha. The universe is no longer in peace! Chaos will rule the world!%nl%%nl%&aAs your new leader, %{chaosera}%"
+            else:
+                send "&aYou have held the chaos magic. You may now revive the universe and banish the dictator! Type /banishchaos!" to {_p}
+        else:
+            send "&3Welcome, the leader of the world!"
+    else if {banishedchaosplayers::*} contains player:
+        kick player due to "&4Your era of chaos leadership has been revoked!%nl%%nl%&4You are now permanently banished!"
+
+
+command /banishchaos:
+    trigger:
+        if {chaosera} is set:
+            noChaos(player)

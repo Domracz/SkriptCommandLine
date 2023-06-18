@@ -1,0 +1,157 @@
+function parseCommands(commands: texts, p: player, currentpath: text):
+	loop {_commands::*}:
+		#Conditions
+		if loop-value starts with "*":
+			set {_cond} to loop-value
+			replace all "*" in {_cond} with ""
+			add 1 to {_condleft}
+			set {_condtrue::%{_condleft}%} to false
+			if {_cond} starts with "Skript.":
+				set {_skripteff} to {_cond}
+				replace all "Skript." in {_skripteff} with ""
+				if {_skripteff} starts with "addons.contains":
+					set {_check} to {_skripteff}
+					replace all "addons.contains=" in {_check} with ""
+					if addons list contains {_check}:
+						set {_condtrue} to true
+			else if {_cond} starts with "Server.":
+				set {_cmdarg} to {_cond}
+				replace all "Server." and "" in {_cond} with ""
+				set {_cmdargs::*} to {_cond} split at "."
+				if {_cmdargs::1} is "plugins":
+					if {_cmdargs::2} starts with "contains":
+						set {_check} to {_cmdargs::2}
+						replace all "plugins" in {_check} with ""
+						if plugins list contains {_check}:
+							set {_condtrue} to true
+				else if {_cmdargs::1} is "players":
+					if {_cmdargs::2} starts with "online":
+						set {_check} to {_cmdargs::2}
+						replace all "online=" in {_check} with ""
+						if all players contains {_check}:
+							set {_condtrue} to true
+		else if loop-value starts with "*!":
+			set {_cond} to loop-value
+			replace all "*!" in {_cond} with ""
+			add 1 to {_condleft}
+			set {_condtrue::%{_condleft}%} to true
+			if {_cond} starts with "Skript.":
+				set {_skripteff} to {_cond}
+				replace all "Skript." in {_skripteff} with ""
+				if {_skripteff} starts with "addons.contains":
+					set {_check} to {_skripteff}
+					replace all "addons.contains=" in {_check} with ""
+					if addons list contains {_check}:
+						set {_condtrue} to false
+			else if {_cond} starts with "Server.":
+				set {_cmdarg} to {_cond}
+				replace all "Server." and "" in {_cond} with ""
+				set {_cmdargs::*} to {_cond} split at "."
+				if {_cmdargs::1} is "plugins":
+					if {_cmdargs::2} starts with "contains":
+						set {_check} to {_cmdargs::2}
+						replace all "plugins" in {_check} with ""
+						if plugins list contains {_check}:
+							set {_condtrue} to false
+				else if {_cmdargs::1} is "players":
+					if {_cmdargs::2} starts with "online":
+						set {_check} to {_cmdargs::2}
+						replace all "online=" in {_check} with ""
+						if all players contains {_check}:
+							set {_condtrue} to false
+		else:
+			set {_required} to ""
+			set {_requiredchars} to {_required} split at ""
+			set {_trc} to size of {_requiredchars}
+			set {_spacesdone} to 0
+			set {_effectparts} to {_eff} split at ""
+			loop {_effectparts}:
+				if loop-value is " ":
+					add 1 to {_spacesdone}
+					set {_effectparts::%loop-index%} to ""
+				else:
+					break loop
+			set {_eff} to join {_effectparts::*}
+			set {_indents} to {_spacesdone} / 4
+			if {_indents} =< {_condleft}:
+				if {_indents} is less than {_condleft}:
+					set {_condleft} to {_indents}
+				if {_condtrue::%{_condleft}%} is true or {_condleft} is 0:
+					if {_eff} starts with "$dl":
+						set {_cmdarg} to {_eff}
+						replace all "$dl " in {_cmdarg} with ""
+						set {_paths::*} to {_cmdarg} split at " -> "
+						send "&3[Package Installer] &3Downloading: &e<underline><link:%{_paths::1}%>%{_paths::1}%><reset>" to {_p}
+				
+						download file from "%{_paths::1}%" to file "/%{_currentpath}%/%{_paths::2}%"
+						send "&3[Package Installer] &3Download: &e<underline><link:%{_paths::1}%>%{_paths::1}%><reset> &3Completed. Check console for errors." to {_p}
+					else if {_eff} starts with "$snd":
+						set {_cmdarg} to {_eff}
+						replace all "$snd " and """" in {_cmdarg} with ""
+						send formatted "&3[Package Installer] [Message from package] %{_cmdarg}%" to {_p}
+					else if {_eff} starts with "$cmd":
+						set {_cmdarg} to {_eff}
+						replace all "$cmd " and """" in {_cmdarg} with ""
+						make console execute command "%{_cmdarg}%"
+					else if {_eff} starts with "$mkdir":
+						set {_cmdarg} to {_eff}
+						replace all "$mkdir " and """" in {_cmdarg} with ""
+						create directory "/%{_currentpath}%/%{_cmdarg}%"
+						send "&3[Package Installer] &3Create directory: &e/%{_currentpath}%&e/&e%{_cmdarg}%" to {_p}
+					else if {_eff} starts with "$cd":
+						set {_cmdarg} to {_eff}
+						replace all "$cd " and """" in {_cmdarg} with ""
+						if {_cmdarg} starts with ":":
+							replace all ":" in {_cmdarg} with ""
+							set {_currentpath} to {_cmdarg}
+						else if {_cmdarg} is "..":
+							set {_folders::*} to {_currentpath} split at "/"
+							set {_folders::%amount of {folders::*}%} to ""
+							set {_currentpath} to {folders::%join {_folders::*} with "/"%}
+					else if {_eff} starts with "$edtln":
+						set {_cmdarg} to {_eff}
+						replace all "$edtln " and """" in {_cmdarg} with ""
+						set {_cmdargs::*} to {_cmdarg} split at " "
+						set {_line} to "%{_cmdargs::1}%" parsed as integer
+						if {_cmdargs::1} is set:
+							if {_cmdargs::2} is set:
+								if {_cmdargs::3} is set:
+									set line {_line} in file "%{_currentpath}%/%{_cmdargs::2}%" to {_cmdargs::3}
+					else if {_eff} starts with "$del":
+						set {_cmdarg} to {_eff}
+						replace all "$del " and """" in {_cmdarg} with ""
+						delete file "%{_currentpath}%/%{_cmdarg}%"
+					else if {_eff} starts with "$deldir":
+						set {_cmdarg} to {_eff}
+						replace all "$deldir " and """" in {_cmdarg} with ""
+						delete dir "%{_currentpath}%/%{_cmdarg}%"
+					else if {_eff} starts with "$server.":
+						set {_cmdarg} to {_eff}
+						replace all "$server." and """" in {_cmdarg} with ""
+						set {_cmdargs::*} to {_cmdarg} split at "."
+						if {_cmdargs::1} is "shutdown":
+							send "&3[Package Installer] &4Server is shutting down in 5 seconds" to {_p}
+							wait 5 seconds
+							stop server
+						else if {_cmdargs::1} is "restart":
+							send "&3[Package Installer] &4Server is restarting in 5 seconds" to {_p}
+							wait 5 seconds
+							restart server
+						else if {_cmdargs::1} is "player":
+							if {_cmdargs::2} is "kick":
+								set {_player} to "%{_cmdargs::3}%" parsed as player
+								kick {_player} due to {_cmdargs::4}
+							else if {_cmdargs::2} is "ban":
+								set {_player} to "%{_cmdargs::3}%" parsed as player
+								ban {_player} due to {_cmdargs::4}
+					else if {_eff} starts with "$unzip":
+						set {_args} to {_eff}
+						replace all "$unzip " in {_args} with ""
+						set {_paths::*} to {_args} split at " -> "
+						send "&3[Package Installer] &3Unzip: &e<underline>%{_paths::1}%><reset>" to {_p}
+						unzip "%{_currentpath}%%{_paths::1}%" to dir "%{_currentpath}%%{_paths::2}%"
+						send "&3[Package Installer] &3Unzip: &e<underline>%{_paths::1}%><reset> &3Completed." to {_p}
+					else:
+						send "&4[CMDPackageScript] Invalid Command Executed." to {_p}
+			else:
+				send "&4[CMDPackageScript] Expected %{_condleft}*4%&4 spaces, but found %{_indents}*4%&4 spaces." to {_p}
