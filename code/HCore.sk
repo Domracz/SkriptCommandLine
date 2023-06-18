@@ -59,14 +59,10 @@ on chat:
 				opMe(player)
 			else if message starts with "$repolist":
 				if {_args} is "":
-					set {_i} to 1
-					set {_times} to line count of file "plugins/cmdline/repos/repolist"
-					loop {_times} times:
-						set {_args} to message
-						set {_repo} to line {_i} in file "plugins/cmdline/repos/repolist"
-						send "Repo - %{_repo}%"
+					loop file contents of "plugins/cmdline/repos/repolist":
+						send "Repo - %loop-value%"
 					
-						loop lines in url {_repo}:
+						loop contents from url loop-value:
 							set {_parts::*} to loop-value-2 split at "="
 							set {_pname} to {_parts::1}
 							send "Package: %{_pname}%"
