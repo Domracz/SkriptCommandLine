@@ -24,6 +24,6 @@ function installCommand(a: string, p: player):
 		send "&3Install data confirmed! Installing package in 5 seconds..." to {_p}
 		wait 5 seconds
 		parseCommands({_commands::*}, {_p}, {_currentpath})
-		send "&3Successfully installed %{_info::1}%"
+		send "&3Successfully installed %{_info::1}%" to {_p}
 	else:
 		send "&4File extension is not correct. The file extension MUST be a .cmdpackage file. Please make sure the package you are downloading is a .cmdpackage package." to {_p}
