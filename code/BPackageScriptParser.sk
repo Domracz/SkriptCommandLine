@@ -77,7 +77,11 @@ function parseCommands(commands: texts, p: player, currentpath: text):
 			if {_indents} is greater than {_gthan}:
 				if {_indents} is less than {_condleft}:
 					set {_condleft} to {_indents}
-				if {_condtrue::%{_condleft}%} is true or {_condleft} is 0:
+				if {_condleft} is 0:
+					set {_condcheck} to true
+				if {_condtrue::%{_condleft}%} is true:
+					set {_condcheck} to true
+				if {_condcheck} is true:
 					if {_eff} starts with "$dl":
 						set {_cmdarg} to {_eff}
 						replace all "$dl " in {_cmdarg} with ""
