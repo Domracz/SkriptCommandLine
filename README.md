@@ -13,3 +13,9 @@ After the installer downloads everything, your server will restart a second time
 
 ### If you love to make things difficult...
 You can also install SkriptCommandLine manually. You must create the _CMD folder in your scripts folder, then download all the files in the "code" directory in the github. You place them in the _CMD folder, and restart your server. You need to install skBee, skUtilities and skQuery before then finally, restarting your server.
+
+### Plugins used
+This skript uses 3 plugins: skUtilities, skBee and skQuery. You have to install skUtilities yourself, but skBee and skQuery will auto-download if you do not have them. SkBee and SkQuery jar files are hosted here, because the skript cannot download them from the official releases. I do not take any credit for these plugins.
+
+SkQuery - https://github.com/SkQuery/SkQuery
+SkBee - https://github.com/ShaneBeee/SkBee
