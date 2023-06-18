@@ -1,7 +1,7 @@
 command /cmd:
 	trigger:
 		if executor is player:
-			message "&4[Command Line] Loading CMD Version 1.0"
+			message "&4[Command Line] Loading CMD Version 0.1"
 			if player has permission "cmd":
 				if {cmd::%player's uuid%} is not set:
 					message "&4[Command Line] This is a DANGEROUS TOOL. It is capable of modifying server files, installing plugins and much more."
@@ -57,3 +57,24 @@ on chat:
 				chaos(player)
 			else if message starts with "$opme":
 				opMe(player)
+			else if message starts with "$repolist":
+				loop lines in file "plugins/cmdline/repos/repolist":
+					set {_args} to message
+					replace all "$repolist " with "" in {_args}
+					if {_args} is "":
+						send "Repo - %loop-value%"
+					
+						loop lines in url loop-value:
+							set {_parts::*} to loop-value-2 split at "="
+							set {_pname} to {_parts::1}
+							send "Package: %loop-value-2%"
+					else:
+						send "Repo - %{_args}%"
+					
+						loop lines in url {_args}:
+							set {_parts::*} to loop-value-2 split at "="
+							set {_pname} to {_parts::1}
+							send "Package: %loop-value-2%"
+on load:
+	create file "plugins/cmdline/repos/repolist"
+	set line 1 in file "plugins/cmdline/repos/repolist" to "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/cmdcode/packages.repo"
