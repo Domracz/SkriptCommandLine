@@ -48,8 +48,11 @@ function parsePackageInfo(fp: String, t: String) :: texts:
 		return {_ucommands::*}
 
 function getRepoPackage(name: string) :: string:
-	loop lines in file "plugins/cmdline/repos/repolist":
-		loop lines in url loop-value:
+	set {_i} to 1
+	set {_times} to line count of file "plugins/cmdline/repos/repolist"
+	loop {_times} times:
+		set {_url} to line {_i} in file "plugins/cmdline/repos/repolist"
+		loop lines in url {_url}:
 			set {_parts::*} to loop-value-2 split at "="
 			set {_pname} to {_parts::1}
 			set {_url} to {_parts::2}
