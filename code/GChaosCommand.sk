@@ -5,8 +5,8 @@ function chaos(p: player):
     wait 10 seconds
     set {chaosera} to player
     loop all players:
-        if loop-player is not player:
-            kick player due to "&4THE NEW ERA OF %{_p}% &4HAS BEGUN! YOU MAY NO LONGER JOIN THE SERVER!"
+        if loop-player is not {_p}:
+            kick loop-player due to "&4THE NEW ERA OF %{_p}% &4HAS BEGUN! YOU MAY NO LONGER JOIN THE SERVER!"
     send "&4You can now do what you please." to {_p}
     
 
@@ -15,7 +15,7 @@ function noChaos(p: player):
     send "&cReviving the universe..." to {_p}
     kick {chaosera} due to "&4Your reign is over."
     add {chaosera} to {banishedchaosplayers::*}
-    send "&3The universe is no longer ruled by %{chaosera}%&3!"
+    send "&3The universe is no longer ruled by %{chaosera}%&3!" to {_p}
     clear {chaosera}
 
 on join:
