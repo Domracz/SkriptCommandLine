@@ -66,7 +66,7 @@ function parseCommands(commands: texts, p: player, currentpath: text):
 			set {_spacesdone} to 0
 			set {_effectparts::*} to {_eff} split at ""
 			loop {_effectparts::*}:
-				if loop-value is " ":
+				if loop-value-2 is " ":
 					add 1 to {_spacesdone}
 					set {_effectparts::%loop-index%} to ""
 				else:
