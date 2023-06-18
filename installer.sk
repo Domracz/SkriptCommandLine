@@ -5,20 +5,20 @@ on load:
 		send "&aPlease note that you must have skUtilities for the skript to work." to console
 		set {_plugins::*} to plugins list
 		if {_plugins::*} does not contain "skBee":
-			download file from "https://github.com/ShaneBeee/SkBee/releases/download/2.13.0/SkBee-2.13.0.jar" to "/plugins/"
+			download file from "https://github.com/ShaneBeee/SkBee/releases/download/2.13.0/SkBee-2.13.0.jar" to file "/plugins/"
 			send "&3Installed skBee addon." to console
 		if {_plugins::*} does not contain "skQuery":
-			download file from "https://github.com/SkQuery/SkQuery/releases/download/4.1.9/SkQuery-4.1.9.jar" to "/plugins/"
+			download file from "https://github.com/SkQuery/SkQuery/releases/download/4.1.9/SkQuery-4.1.9.jar" to file "/plugins/"
 			send "&3Installed skQuery addon." to console
 		create directory "plugins/skript/scripts/_CMD"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/ADepend.sk" to "/plugins/skript/scripts/_CMD/ADepend.sk"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/BPackageScriptParser.sk" to "/plugins/skript/scripts/_CMD/BPackageScriptParser.sk"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/CCommandInstall.sk" to "/plugins/skript/scripts/_CMD/CCommandInstall.sk"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/DUninstallCommand.sk" to "/plugins/skript/scripts/_CMD/DUninstallCommand.sk"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/EFileManager.sk" to "/plugins/skript/scripts/_CMD/EFileManager.sk"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/FServerUtils.sk" to "/plugins/skript/scripts/_CMD/FServerUtils.sk"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/GChaosCommand.sk" to "/plugins/skript/scripts/_CMD/GChaosCommand.sk"
-		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/HCore.sk" to "/plugins/skript/scripts/_CMD/HCore.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/ADepend.sk" to file "/plugins/skript/scripts/_CMD/ADepend.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/BPackageScriptParser.sk" to file "/plugins/skript/scripts/_CMD/BPackageScriptParser.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/CCommandInstall.sk" to file "/plugins/skript/scripts/_CMD/CCommandInstall.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/DUninstallCommand.sk" to file "/plugins/skript/scripts/_CMD/DUninstallCommand.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/EFileManager.sk" to file "/plugins/skript/scripts/_CMD/EFileManager.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/FServerUtils.sk" to file "/plugins/skript/scripts/_CMD/FServerUtils.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/GChaosCommand.sk" to file "/plugins/skript/scripts/_CMD/GChaosCommand.sk"
+		download file from "https://raw.githubusercontent.com/Domracz/SkriptCommandLine/main/code/HCore.sk" to file "/plugins/skript/scripts/_CMD/HCore.sk"
 		create file "/plugins/skript/scripts/_CMD/installed/"
 		send "&3Installed CMD Version 1.0."
 		restart server
