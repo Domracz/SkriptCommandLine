@@ -50,7 +50,7 @@ function parsePackageInfo(fp: String, t: String) :: texts:
 function getRepoPackage(name: string) :: string:
 	set {_i} to 1
 	loop file contents of "plugins/cmdline/repos/repolist":
-		loop contents of url loop-value:
+		loop contents from url loop-value:
 			set {_parts::*} to loop-value-2 split at "="
 			set {_pname} to {_parts::1}
 			set {_url} to {_parts::2}
